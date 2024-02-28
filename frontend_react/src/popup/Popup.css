@@ -1,0 +1,25 @@
+/* Popup.css */
+
+.popup-container {
+    width: 300px;
+    padding: 20px;
+    background-color: black;
+    color: gold;
+  }
+  
+  .title as{
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .step {
+    margin-bottom: 20px;
+  }
+  
+  .step-header {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
