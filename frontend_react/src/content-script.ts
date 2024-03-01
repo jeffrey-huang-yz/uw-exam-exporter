@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         const textContent = document.body.innerText;
         // Send the text content back to the background script  
         sendResponse({ textContent });
-
+        return true; 
     }
 });
 export {};
