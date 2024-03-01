@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import App from './App';
-import Popup from './popup/Popup';
+import Popup from './src/popup/Popup';
 
 const root = document.createElement("div")
 root.className = "container"

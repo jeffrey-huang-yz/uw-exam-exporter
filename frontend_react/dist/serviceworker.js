@@ -1,0 +1,1 @@
+(()=>{"use strict";chrome.runtime.onMessage.addListener(((e,t,n)=>{if("CopyText"===e.action)return console.log("Message received in content script:",e),n({textContent:document.body.innerText}),!0}))})();

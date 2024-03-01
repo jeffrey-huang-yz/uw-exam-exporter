@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-, "src/popup", "src/scripts"  ]
+, "src/popup", "src/scripts", "serviceworker.js", "index.tsx"  ]
 }

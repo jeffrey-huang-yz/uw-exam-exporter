@@ -4,7 +4,9 @@ const CopyPlugin = require("copy-webpack-plugin")
 
 module.exports = {
     entry: {
-        index: "./src/index.tsx"
+        popup: './src/popup/Popup.tsx',
+        serviceworker: './serviceworker.js',
+        index: "./index.tsx",
     },
     mode: "production",
     module: {
@@ -33,18 +35,20 @@ module.exports = {
     plugins: [
         new CopyPlugin({
             patterns: [
-                { from: "manifest.json", to: "../manifest.json" },
+                { from: "manifest.json", to: "./" }, // Change 'to' to './'
             ],
         }),
         ...getHtmlPlugins(["index"]),
     ],
+    
     resolve: {
         extensions: [".tsx", ".ts", ".js"],
     },
     output: {
-        path: path.join(__dirname, "dist/js"),
-        filename: "[name].js",
+        path: path.resolve(__dirname, 'dist'),
+        filename: '[name].js',
     },
+   
 };
 
 function getHtmlPlugins(chunks) {
