@@ -1,16 +1,32 @@
 import tabula
 import pandas as pd
 import re
-
+from pymongo import MongoClient
 
 def read_pdf_table(pdf_path):
     # Read exam schedule from pdf 
     tables = tabula.read_pdf_with_template(pdf_path, pages=None, template_path="schedule_reader/winter_2024_final_exam_schedule_3.tabula-template.json", lattice=True, guess=False)
     return tables
 
+
+def replace_multiple_spaces(text):
+    while '  ' in text:
+        text = text.replace('  ', ' ')
+    return text
+
+
 def extract_info(row):
-    # Regular expression pattern to extract information
-    pattern = r'([A-Z]+\s\d{3})(\d{3}|\d{3}-\d{3}|\d{3}(?:,\s*\d{3})*)?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?(\w+)? (\d{1,2})?,? (\d{4}) (\d{1,2}:\d{2} [AP]M)?(\d{1,2}:\d{2} [AP]M)?(.*)?'
+    isPac = False
+    row = replace_multiple_spaces(row)
+    row = row.replace("0 ", "0")
+    row = row.replace("1 ", "1")
+    pattern = r'([A-Z]+\s\d{3}[A-Z]?)?(?:\s)?(\d{3}(?:\s)?-\d{3}(?:,\d{3})*|\d{3}-\d{3}|\d{3}(?:,\d{3})*|\d{3})?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?(\w+)? (\d{1,2})?,? (\d{4}) (\d{1,2}:\d{2}[AP]M)?(\d{1,2}:\d{2}[AP]M)?(.*)?'
+    if "PAC 1, 2, 3, 4, 5, 6, 7, 8,"in row:
+        row=row.replace("PAC 1, 2, 3, 4, 5, 6, 7, 8, ", "")
+        isPac = True
+    elif "PAC 1, 2, 3, 4, 5, 6, 7, 8 " in row:
+        row=row.replace("PAC 1, 2, 3, 4, 5, 6, 7, 8 ", "")
+        isPac = True
     match = re.match(pattern, row)
     if match:
         course_code = match.group(1)
@@ -22,9 +38,11 @@ def extract_info(row):
         start_time = match.group(7) if match.group(7) else ''
         end_time = match.group(8) if match.group(8) else ''
         location = match.group(9) if match.group(9) else ''
+        if isPac == True:
+            location = "PAC 1, 2, 3, 4, 5, 6, 7, 8" + location 
         return course_code, course_section, day_of_week, month, day, year, start_time, end_time, location
     else:
-        pattern2 = r'([A-Z]+\s\d{3})?(\d{3}-\d{3}|\d{3}(?:,\s*\d{3})*|\d{3})?'
+        pattern2 = r'([A-Z]+\s\d{3}[A-Z]?)?(?:\s)?(\d{3}-\d{3}|\d{3}(?:,\d{3})*|\d{3})?'
         match = re.match(pattern2, row)
         course_code = match.group(1)
         course_section = match.group(2)
@@ -36,6 +54,7 @@ def extract_info(row):
         end_time = ''
         location = ''
         return course_code, course_section, day_of_week, month, day, year, start_time, end_time, location
+
 
 if __name__ == "__main__":
     pdf_path = 'schedule_reader/winter_2024_final.pdf'
@@ -54,8 +73,30 @@ if __name__ == "__main__":
     
     # Remove carriage return characters
     df = df.str.replace('\r', ' ')
-    
+    print(df[71:77])
     # Apply extract_info function to each row of the DataFrame
     df_info = df.apply(extract_info)
     
     print(df_info)
+
+
+    # Connect to MongoDB
+    client = MongoClient("mongodb://localhost:27017/")
+    db = client["uwexamexporter"]
+    collection = db["exams"]
+
+    # Convert DataFrame to a list of dictionaries
+    courses = df_info.apply(lambda x: {
+        "course_code": x[0],
+        "course_section": x[1],
+        "day_of_week": x[2],
+        "month": x[3],
+        "day": x[4],
+        "year": x[5],
+        "start_time": x[6],
+        "end_time": x[7],
+        "location": x[8]
+    }).tolist()
+
+    # Insert data into MongoDB
+    collection.insert_many(courses)
