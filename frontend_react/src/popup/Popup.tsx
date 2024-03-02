@@ -13,14 +13,6 @@ const Popup: React.FC = () => {
     chrome.runtime.sendMessage({ action: 'CopyText' }, (response) => {
       console.log('response from background script:', response);
       
-      chrome.runtime.sendMessage({ action: 'ExtractCourses', data:{response} }, (courses) => {
-        console.log('Response received in popup:', courses);
-       
-        if (courses) {
-            
-        }
-
-    });
     });
   };
 

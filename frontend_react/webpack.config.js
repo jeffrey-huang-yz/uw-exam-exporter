@@ -7,6 +7,7 @@ module.exports = {
         popup: './src/popup/Popup.tsx',
         serviceworker: './serviceworker.js',
         index: "./index.tsx",
+        content: "./content.js"
     },
     mode: "production",
     module: {

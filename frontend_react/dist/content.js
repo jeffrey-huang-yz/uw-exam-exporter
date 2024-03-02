@@ -1,0 +1,1 @@
+chrome.runtime.onMessage.addListener((function(e,n,o){if("CopyText"===e.action){console.log("message was received in content.js",e);const n=document.body.innerText;console.log(n),o({textContent:n})}}));
