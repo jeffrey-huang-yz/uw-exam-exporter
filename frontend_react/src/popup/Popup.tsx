@@ -180,7 +180,7 @@ Qianqiu Zhang
     const element = document.createElement('a');
     const file = new Blob([icsContent], { type: 'text/calendar' });
     element.href = URL.createObjectURL(file);
-    element.download = 'schedule.ics';
+    element.download = 'examschedule.ics';
     document.body.appendChild(element);
     element.click();
   };
@@ -212,7 +212,7 @@ Qianqiu Zhang
       icsContent += `BEGIN:VEVENT\n`;
       icsContent += `UID:${index}@example.com\n`;
       icsContent += `SUMMARY:${course_code}\n`;
-      icsContent += `DESCRIPTION:Course Section: ${course_section}\\nDay of Week: ${day_of_week}\\nLocation: ${location}\n`;
+      icsContent += `DESCRIPTION:Course Section: ${course_section}\\nLocation: ${location}\n`;
       icsContent += `DTSTART:${formatDate(startDate)}\n`;
       icsContent += `DTEND:${formatDate(endDate)}\n`;
       icsContent += `END:VEVENT\n`;
@@ -229,7 +229,7 @@ Qianqiu Zhang
       <h1 className="title">UWaterloo Exam Schedule Exporter</h1>
       <div className="step">
         <h2 className="step-header">Step 1: Extract Courses</h2>
-        <p className='step-description'>Navigate to the "Class Sechedule" tile in Quest and click the button below.</p>
+        <p className='step-description'>Navigate to the "Class Sechedule" tile in Quest and click the button below. Exam data is currently for the Winter 2024 term.</p>
         <button className="extract-button" onClick={handleExtractCourses}>Extract Courses</button>
       </div>
       <div className="step">
@@ -250,7 +250,7 @@ Qianqiu Zhang
       </div>
       <div className="step">
         <h2 className="step-header">Step 3: Export Schedule</h2>
-        <p className='step-description'>Content for Step 3 goes here...</p>
+        <p className='step-description'>Important exams into your calendar of choice via a .ics file.</p>
         <button className="generate-ics-button" onClick={handleGenerateICSAndDownload}>Generate .ics File and Download</button>
       </div>
     </div>

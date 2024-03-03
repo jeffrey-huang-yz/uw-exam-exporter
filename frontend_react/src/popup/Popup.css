@@ -62,7 +62,7 @@
     background-color: white;
     border: none;
     color: black;
-    padding: 15px 32px;
+    padding: 15px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -75,6 +75,9 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+
   }
 
   .extract-button:hover {
@@ -132,6 +135,33 @@
     background-color: #ff0000; 
     transition: transform 0.5s ease-in;
   }
+  .generate-ics-button{
+    margin-top: 1rem;
+    background-color: white;
+    border: none;
+    color: black;
+    padding: 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    font-weight: 700;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .generate-ics-button:hover {
+    background-color: gold;
+    box-shadow: 0 0 20px gold;
+    transition: background-color 0.3s ease;
+  }
+
 
 /* For WebKit/Blink (Chrome, Safari) */
 /* Width */
