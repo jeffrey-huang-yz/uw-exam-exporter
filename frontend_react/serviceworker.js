@@ -5,7 +5,7 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
           console.log('tabs', tabs)
           if (tabs[0]) {
               console.log("seing message to content.js");
-              chrome.tabs.sendMessage(tabs[0].id, { action: 'CopyText' }, function(response) {
+              chrome.tabs.sendMessage(tabs[0].id, { action: 'CopyText',currentWindow: true }, function(response) {
                   console.log("received response from content.js", response);
                   sendResponse(response); // Sending content script response back
               });
