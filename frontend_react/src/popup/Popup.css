@@ -23,13 +23,28 @@
     font-weight: bold;
     margin-bottom: 10px;
   }
-  
+  .step-header-courses {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
   .step-description {
     color: white;
     justify-content: center;
     align-items: center;
     display: flex;
     flex-direction: column;
+    margin-bottom: 12px;
+  }
+  .step-description-courses {
+    color: white;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    margin-top:0px
   }
 
   .noselect {
@@ -67,3 +82,77 @@
     box-shadow: 0 0 20px gold;
     transition: background-color 0.3s ease;
   }
+
+  .course-card {
+    background-color: #ffffff;
+    color: #000000;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    
+  }
+  p {
+    font-weight: 600;
+    margin: 0;
+  }
+  
+  
+  .course-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px gold;
+    transition: transform 0.3s ease-in;
+  }
+  .course-code{
+    margin-top: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .title{
+    margin-top: 20px;
+  }
+
+  .remove-button {
+    width: 100%;
+    display: block;
+    padding: 8px;
+    margin-top: 10px;
+    background-color: gold;
+    color: #ffffff; 
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .remove-button:hover {
+    background-color: #ff0000; 
+    transition: transform 0.5s ease-in;
+  }
+
+/* For WebKit/Blink (Chrome, Safari) */
+/* Width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: gold;
+  border-radius: 4px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(51, 100%, 26%);
+}
+
+

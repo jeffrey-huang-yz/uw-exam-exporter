@@ -1,20 +1,39 @@
 
 from flask import Flask, request, jsonify
 import re
+from pymongo import MongoClient
 
 app = Flask(__name__)
 
+client = MongoClient("mongodb://localhost:27017/")
+db = client["uwexamexporter"]
+collection = db["exams"]
+
+
 def extract_course_codes(text):
-    pattern = r'([A-Z]+\s\d{3})'
+    pattern = r'([A-Z]+\s\d{3}[A-Z]?)'
     course_codes = re.findall(pattern, text)
     return course_codes
 
 @app.route('/extract-course-codes', methods=['POST'])
 def process_text():
+    print('received request')
     data = request.get_json()
     text = data.get('text', '')
     course_codes = extract_course_codes(text)
-    return jsonify({"course_codes": course_codes})
+    print(course_codes)
+    
+    matched_courses = []
+    for code in course_codes:
+        query = {"course_code": code}
+        projection = {"_id": 0}  # Exclude the _id field
+        cursor = collection.find(query, projection)
+        for result in cursor:
+            matched_courses.append(result)
+    return jsonify({"matched_courses": matched_courses})
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
+    
