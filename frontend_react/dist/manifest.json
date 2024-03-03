@@ -1,8 +1,8 @@
 {
     "version": "1.0.0",
     "manifest_version": 3,
-    "name": "React Chrome Extension",
-    "description": "This is a Chrome extension built with React and TypeScript",
+    "name": "UWaterloo Exam Schedule Exporter",
+    "description": "This is a Chrome extension designed for University of Waterloo students to easily export their exam schedules using a .ics file. ",
     "action": {
         "default_popup": "index.html",
         "default_title": "React Chrome Extension"

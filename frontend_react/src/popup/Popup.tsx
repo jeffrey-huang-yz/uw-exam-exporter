@@ -149,7 +149,7 @@ Qianqiu Zhang
     });
 
     // Get the courses from the copied text
-    fetch('http://localhost:5000/extract-course-codes', {
+    fetch('https://uw-exam-exporter.onrender.com/extract-course-codes', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
