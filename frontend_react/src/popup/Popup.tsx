@@ -18,126 +18,7 @@ interface Course {
 const Popup: React.FC = () => {
   const [copiedText, setCopiedText] = useState('');
   const [courses, setCourses] = useState<Course[]>([]);
-  const testValues = `ECON 101 - Intro Microeconomics
-  Status    Units    Grading    Deadlines
-  Enrolled
-  0.50
-  Numeric Grading Basis
-  Academic Calendar Deadlines
-  Class Nbr    Section    Component    Days & Times    Room    Instructor    Start/End Date
-  3217
-  002
-  LEC
-  MW 2:30PM - 3:50PM
-  M3 1006
-  Alain-Desire Nimubona
-  01/08/2024 - 04/08/2024
-  ENGL 119 - Communications (Math/Comp Sci)
-  Status    Units    Grading    Deadlines
-  Enrolled
-  0.50
-  Numeric Grading Basis
-  Academic Calendar Deadlines
-  Class Nbr    Section    Component    Days & Times    Room    Instructor    Start/End Date
-  8626
-  004
-  LEC
-  TTh 2:30PM - 3:50PM
-  EV3 3406
-  Megan Selinger
-  01/08/2024 - 04/08/2024
-  MATH 136 - Linear Algebra 1 (Honours)
-  Status    Units    Grading    Deadlines
-  Enrolled
-  0.50
-  Numeric Grading Basis
-  Academic Calendar Deadlines
-  Class Nbr    Section    Component    Days & Times    Room    Instructor    Start/End Date
-  5941
-  005
-  LEC
-  MWF 11:30AM - 12:20PM
-  MC 4021
-  Zhenchao Ge
-  01/08/2024 - 04/08/2024
-  6091
-  201
-  TST
-  M 7:00PM - 8:50PM
-  TBA
-  To be Announced
-  02/12/2024 - 02/12/2024
-  6386
-  102
-  TUT
-  M 4:30PM - 5:20PM
-  STC 1012
-  To be Announced
-  01/08/2024 - 04/08/2024
-  MATH 138 - Calculus 2 (Honours)
-  Status    Units    Grading    Deadlines
-  Enrolled
-  0.50
-  Numeric Grading Basis
-  Academic Calendar Deadlines
-  Class Nbr    Section    Component    Days & Times    Room    Instructor    Start/End Date
-  5949
-  005
-  LEC
-  MWF 8:30AM - 9:20AM
-  RCH 103
-  Avneet Kaur
-  01/08/2024 - 04/08/2024
-  6092
-  201
-  TST
-  M 7:00PM - 8:50PM
-  TBA
-  To be Announced
-  02/26/2024 - 02/26/2024
-  6337
-  104
-  TUT
-  W 5:30PM - 6:20PM
-  DC 1350
-  To be Announced
-  01/08/2024 - 04/08/2024
-  CS 136 - Elem Algo Dsgn & Data Abstrac
-Status    Units    Grading    Deadlines
-Enrolled
-0.50
-Numeric Grading Basis
-Academic Calendar Deadlines
-Class Nbr    Section    Component    Days & Times    Room    Instructor    Start/End Date
-6056
-201
-TST
-M 7:00PM - 8:50PM
-TBA
-Dalibor Dvorski
-03/04/2024 - 03/04/2024
-6075
-003
-LEC
-TTh 1:00PM - 2:20PM
-MC 2034
-Cameron Morland
-01/08/2024 - 04/08/2024
-CS 136L - Tools & Tech for Software Dev
-Status    Units    Grading    Deadlines
-Enrolled
-0.25
-Credit / Non-Credit Basis
-Academic Calendar Deadlines
-Class Nbr    Section    Component    Days & Times    Room    Instructor    Start/End Date
-6613
-005
-LAB
-T 10:30AM - 12:20PM
-MC 4060
-Dalibor Dvorski,
-Qianqiu Zhang
-01/08/2024 - 04/08/2024`;
+  
   // On Extract Courses click
   const handleExtractCourses = () => {
     // Add your functionality here
@@ -154,7 +35,7 @@ Qianqiu Zhang
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ text: testValues })
+        body: JSON.stringify({ text: copiedText })
     })
     .then(response => {
       if (response.ok) {
