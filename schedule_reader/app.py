@@ -3,6 +3,7 @@ import pandas as pd
 import re
 from pymongo import MongoClient
 
+
 def read_pdf_table(pdf_path):
     # Read exam schedule from pdf 
     tables = tabula.read_pdf_with_template(pdf_path, pages=None, template_path="schedule_reader/winter_2024_final_exam_schedule_3.tabula-template.json", lattice=True, guess=False)
@@ -71,7 +72,7 @@ if __name__ == "__main__":
     # Concatenate the columns into a single dataframe
     df = pd.concat(concatenated_data, ignore_index=True, axis=0)
     
-    # Remove carriage return characters
+    # Remove carriage returns
     df = df.str.replace('\r', ' ')
     print(df[71:77])
     # Apply extract_info function to each row of the DataFrame
@@ -79,12 +80,10 @@ if __name__ == "__main__":
     
     print(df_info)
 
-
     # Connect to MongoDB
-    client = MongoClient("mongodb://localhost:27017/")
+    client = MongoClient(PROCESS.env.MONGO_URI)
     db = client["uwexamexporter"]
     collection = db["exams"]
-
     # Convert DataFrame to a list of dictionaries
     courses = df_info.apply(lambda x: {
         "course_code": x[0],
@@ -97,6 +96,8 @@ if __name__ == "__main__":
         "end_time": x[7],
         "location": x[8]
     }).tolist()
-
     # Insert data into MongoDB
     collection.insert_many(courses)
+
+
+
