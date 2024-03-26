@@ -5,7 +5,7 @@ from pymongo import MongoClient
 
 app = Flask(__name__)
 
-client = MongoClient('mongodb+srv://jeffreyhuangyz:RPblDesiOjqxhGcl@uwexamexporter.imfxpm4.mongodb.net')
+client = MongoClient(PROCESS.env.MONGO_URI)
 db = client["uwexamexporter"]
 collection = db["exams"]
 
