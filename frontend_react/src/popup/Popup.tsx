@@ -21,15 +21,15 @@ const Popup: React.FC = () => {
   
   // On Extract Courses click
   const handleExtractCourses = () => {
-    // Add your functionality here
     console.log('clicked Extract Courses button');
   
+    // Send a message to copy the text from the screen
     chrome.runtime.sendMessage({ action: 'CopyText' }, (response) => {
       console.log('response from background script:', response);
       setCopiedText('');
     });
 
-    // Get the courses from the copied text
+    // Send message to get the courses from the copied text
     fetch('https://uw-exam-exporter.onrender.com/extract-course-codes', {
         method: 'POST',
         headers: {
@@ -44,8 +44,10 @@ const Popup: React.FC = () => {
       throw new Error('Network response was not ok.');
     })
     .then(data => {
-        console.log(data); // Handle the response data here
-        setCourses(data.matched_courses); // Set the courses state with the fetched data
+        console.log(data); 
+
+        // Set the courses state with the fetched data
+        setCourses(data.matched_courses); 
     })
     .catch(error => {
         console.error('There was a problem with the request:', error);
@@ -56,6 +58,7 @@ const Popup: React.FC = () => {
     setCourses(prevCourses => prevCourses.filter((_, index) => index !== indexToRemove));
   };
   
+  //Generate .ics file and download it to the user's computer 
   const handleGenerateICSAndDownload = () => {
     const icsContent = generateICSFile();
     const element = document.createElement('a');

@@ -2,11 +2,13 @@ import tabula
 import pandas as pd
 import re
 from pymongo import MongoClient
+import os
 
+file_path = 'schedule_reader/winter_2024_final.pdf'
 
 def read_pdf_table(pdf_path):
     # Read exam schedule from pdf 
-    tables = tabula.read_pdf_with_template(pdf_path, pages=None, template_path="schedule_reader/winter_2024_final_exam_schedule_3.tabula-template.json", lattice=True, guess=False)
+    tables = tabula.read_pdf_with_template(pdf_path, pages=None, template_path=f"{file_path}.tabula-template.json", lattice=True, guess=False)
     return tables
 
 
@@ -22,6 +24,8 @@ def extract_info(row):
     row = row.replace("0 ", "0")
     row = row.replace("1 ", "1")
     pattern = r'([A-Z]+\s\d{3}[A-Z]?)?(?:\s)?(\d{3}(?:\s)?-\d{3}(?:,\d{3})*|\d{3}-\d{3}|\d{3}(?:,\d{3})*|\d{3})?(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)?(\w+)? (\d{1,2})?,? (\d{4}) (\d{1,2}:\d{2}[AP]M)?(\d{1,2}:\d{2}[AP]M)?(.*)?'
+    
+    #Handle exceptions for PAC 
     if "PAC 1, 2, 3, 4, 5, 6, 7, 8,"in row:
         row=row.replace("PAC 1, 2, 3, 4, 5, 6, 7, 8, ", "")
         isPac = True
@@ -29,6 +33,8 @@ def extract_info(row):
         row=row.replace("PAC 1, 2, 3, 4, 5, 6, 7, 8 ", "")
         isPac = True
     match = re.match(pattern, row)
+
+    # Extract course information from the row
     if match:
         course_code = match.group(1)
         course_section = match.group(2) if match.group(2) else ''
@@ -81,7 +87,7 @@ if __name__ == "__main__":
     print(df_info)
 
     # Connect to MongoDB
-    client = MongoClient(PROCESS.env.MONGO_URI)
+    client = MongoClient(os.getenv('MONGO_URI'))
     db = client["uwexamexporter"]
     collection = db["exams"]
     # Convert DataFrame to a list of dictionaries

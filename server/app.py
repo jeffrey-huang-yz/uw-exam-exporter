@@ -2,10 +2,11 @@
 from flask import Flask, request, jsonify
 import re
 from pymongo import MongoClient
+import os
 
 app = Flask(__name__)
 
-client = MongoClient(PROCESS.env.MONGO_URI)
+client = MongoClient(os.getenv('MONGO_URI'))
 db = client["uwexamexporter"]
 collection = db["exams"]
 
@@ -15,6 +16,7 @@ def extract_course_codes(text):
     course_codes = re.findall(pattern, text)
     return course_codes
 
+#Endpoint to extract course codes from Quest
 @app.route('/extract-course-codes', methods=['POST'])
 def process_text():
     print('received request')
