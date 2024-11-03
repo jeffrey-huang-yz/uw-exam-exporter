@@ -20,7 +20,7 @@ A browser that is Chromium-based or supports Chrome extensions is required to us
 
 1. Navigate to the Class Schedule page in Quest. Ensure you are on the list view and not the calendar view. ![Quest](demo_pictures/exam_exporter_demo_quest.png)
 2. Enter the extension and select the extract courses button. ![Extract Courses](demo_pictures/exam_exporter_demo.png)
-3. Once the course results have appeared, drop the exams that you don't need. < br / > ![Show Exams Found](demo_pictures/exam_exporter_demo_2.png)
+3. Once the course results have appeared, drop the exams that you don't need. <br /> ![Show Exams Found](demo_pictures/exam_exporter_demo_2.png)
 4. Click the generate .ics button and wait for the .ics to download. <br /> ![Generate .ics](demo_pictures/exam_exporter_demo_3.png)
 5. Import the downloaded .ics file in a calendar application that supports .ics. <br /> ![Generate .ics](demo_pictures/exam_exporter_demo_cal.png)
 
